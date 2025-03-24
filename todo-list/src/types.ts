@@ -14,6 +14,7 @@ export interface Todo {
     id: number;
     name: string;
     email?: string;
+    readonly todos: ReadonlyArray<Todo>;
   }
   
   
