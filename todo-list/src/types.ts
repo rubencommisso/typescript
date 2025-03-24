@@ -16,5 +16,11 @@ export interface Todo {
     email?: string;
     readonly todos: ReadonlyArray<Todo>;
   }
+
+  export interface Project {
+    name: string;
+    users: User[];
+    todos: Todo[];
+  }
   
   

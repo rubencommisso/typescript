@@ -1,4 +1,4 @@
-import { Todo, TodoWithMetadata, User } from './types';
+import { Project, Todo, TodoWithMetadata, User } from './types';
 
 let todos: Todo[] = [];
 let nextId = 1;
@@ -41,10 +41,14 @@ function getTodoSummary(todo: Todo): [string, boolean] {
     return [todo.title, todo.completed];
   }
   
-  todos.forEach(todo => {
-    const [title, completed] = getTodoSummary(todo);
-    console.log(`- ${title} (${completed ? "completato" : "da fare"})`);
-  });
+
+  function createProject(name: string, users: User[], todos: Todo[]): Project {
+    return {
+      name,
+      users,
+      todos
+    };
+  }
   
 
 
@@ -72,3 +76,9 @@ todos.forEach(todo => {
 });
 
 
+const user1: User = { id: 101, name: "Mario Rossi", todos: [todo1, todo2] };
+const user2: User = { id: 102, name: "Lucia Bianchi", todos: [todo3] };
+
+const project = createProject("Gestione Attività", [user1, user2], todos);
+
+console.log("📁 Progetto creato:", project);
