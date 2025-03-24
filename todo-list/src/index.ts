@@ -30,12 +30,25 @@ function getUserTodos(userId: number): Todo[] {
   return todos.filter((todo) => todo.userId === userId);
 }
 
+function parseInput(input: unknown): string {
+    if (typeof input === 'string') {
+      return input;
+    }
+  
+    if (typeof input === 'number') {
+      return input.toString();
+    }
+  
+    return error("Tipo di input non supportato.");
+  }
+  
+
 // Test
 const todo1 = addTodo("Comprare il latte");
 const todo2 = addTodo("Studiare TypeScript");
 const todo3 = addTodo("Fare una passeggiata");
 
-assignTodoToUser(999, 105); // <-- questo lancerà un errore
+
 assignTodoToUser(todo1.id, 101);
 assignTodoToUser(todo2.id, 101);
 assignTodoToUser(todo3.id, 102);
@@ -43,4 +56,8 @@ assignTodoToUser(todo3.id, 102);
 
 console.log("TODOs per l'utente 101:", getUserTodos(101));
 console.log("TODOs per l'utente 102:", getUserTodos(102));
+
+console.log(parseInput("Ciao mondo"));     // 👉 "Ciao mondo"
+console.log(parseInput(123));              // 👉 "123"
+console.log(parseInput(true));             // 👉 Errore: Tipo di input non supportato.
 
