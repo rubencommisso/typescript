@@ -1,4 +1,4 @@
-import { Todo, User } from './types';
+import { Todo, TodoWithMetadata, User } from './types';
 
 let todos: Todo[] = [];
 let nextId = 1;
@@ -62,3 +62,17 @@ console.log(parseInput("Ciao mondo"));     // 👉 "Ciao mondo"
 console.log(parseInput(123));              // 👉 "123"
 /* console.log(parseInput(true)); */             // 👉 Errore: Tipo di input non supportato.
 console.log(todos);
+
+const importantTodo: TodoWithMetadata = {
+    id: 99,
+    title: "Preparare la presentazione",
+    completed: false,
+    metadata: {
+      priority: "alta",
+      scadenza: "2025-03-31"
+    }
+  };
+  
+  console.log("Todo con metadata:", importantTodo);
+  
+  
