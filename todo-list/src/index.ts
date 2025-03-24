@@ -27,22 +27,19 @@ function assignTodoToUser(todoId: number, userId: number): void {
   todo.userId = userId;
 }
 
-function getUserTodos(userId: number): Todo[] {
-  return todos.filter((todo) => todo.userId === userId);
+
+function updateTodo(todoId: number, updates: Partial<Todo>): void {
+    const todo = todos.find((t) => t.id === todoId);
+    if (!todo) {
+        error(`Todo con ID ${todoId} non trovato.`);
+    }
+    
+    Object.assign(todo, updates);
 }
 
-function parseInput(input: unknown): string {
-    if (typeof input === 'string') {
-      return input;
-    }
-  
-    if (typeof input === 'number') {
-      return input.toString();
-    }
-  
-    return error("Tipo di input non supportato.");
-  }
-  
+
+
+
 
 // Test
 const todo1 = addTodo("Comprare il latte", { priority: "alta", note: "Anche il pane" });
@@ -57,23 +54,10 @@ assignTodoToUser(todo3.id, 102);
 
 console.log(todos); 
 
-/* console.log("TODOs per l'utente 101:", getUserTodos(101));
-console.log("TODOs per l'utente 102:", getUserTodos(102));
 
-console.log(parseInput("Ciao mondo"));     
-console.log(parseInput(123));              
-           
+updateTodo(todo1.id, { completed: true });
+updateTodo(todo2.id, { title: "Compilare il modulo fiscale", metadata: "Urgente" });
 
-/* const importantTodo: TodoWithMetadata = {
-    id: 99,
-    title: "Preparare la presentazione",
-    completed: false,
-    metadata: {
-      priority: "alta",
-      scadenza: "2025-03-31"
-    }
-  };
-  
-  console.log("Todo con metadata:", importantTodo); */
-  
-  
+console.log("Todos dopo gli aggiornamenti:");
+console.log(todos);
+
