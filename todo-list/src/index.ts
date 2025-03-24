@@ -14,3 +14,15 @@ function addTodo(title: string): Todo {
   return newTodo;
 }
 
+
+function assignTodoToUser(todoId: number, userId: number): void {
+    
+    const todo = todos.find((t) => t.id === todoId);
+  
+    if (todo) {
+      todo.userId = userId;
+      console.log(`Assegnato todo con ID ${todoId} all'utente con ID ${userId}`);
+    } else {
+      console.log(`Nessun todo trovato con ID ${todoId}`);
+    }
+  }
