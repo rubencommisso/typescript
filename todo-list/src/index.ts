@@ -37,6 +37,15 @@ function updateTodo(todoId: number, updates: Partial<Todo>): void {
     Object.assign(todo, updates);
 }
 
+function getTodoSummary(todo: Todo): [string, boolean] {
+    return [todo.title, todo.completed];
+  }
+  
+  todos.forEach(todo => {
+    const [title, completed] = getTodoSummary(todo);
+    console.log(`- ${title} (${completed ? "completato" : "da fare"})`);
+  });
+  
 
 
 
@@ -44,20 +53,22 @@ function updateTodo(todoId: number, updates: Partial<Todo>): void {
 // Test
 const todo1 = addTodo("Comprare il latte", { priority: "alta", note: "Anche il pane" });
 const todo2 = addTodo("Compilare il modulo", "Scadenza entro venerdì");
-const todo3 = addTodo("Fare una passeggiata"); // nessun metadata
-
-
+const todo3 = addTodo("Fare una passeggiata");
 
 assignTodoToUser(todo1.id, 101);
 assignTodoToUser(todo2.id, 101);
 assignTodoToUser(todo3.id, 102);
-
-console.log(todos); 
-
 
 updateTodo(todo1.id, { completed: true });
 updateTodo(todo2.id, { title: "Compilare il modulo fiscale", metadata: "Urgente" });
 
 console.log("Todos dopo gli aggiornamenti:");
 console.log(todos);
+
+
+todos.forEach(todo => {
+  const [title, completed] = getTodoSummary(todo);
+  console.log(`- ${title} (${completed ? "completato" : "da fare"})`);
+});
+
 
