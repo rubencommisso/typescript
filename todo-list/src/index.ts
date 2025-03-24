@@ -7,11 +7,12 @@ function error(message: string): never {
   throw new Error(message);
 }
 
-function addTodo(title: string): Todo {
+function addTodo(title: string, metadata?: any): Todo {
   const newTodo: Todo = {
     id: nextId++,
     title: title,
     completed: false,
+    metadata: metadata,
   };
 
   todos.push(newTodo);
@@ -44,8 +45,8 @@ function parseInput(input: unknown): string {
   
 
 // Test
-const todo1 = addTodo("Comprare il latte");
-const todo2 = addTodo("Studiare TypeScript");
+const todo1 = addTodo("Comprare il latte", { priority: "alta", note: "Anche il pane" });
+const todo2 = addTodo("Studiare TypeScript"); // senza metadata
 const todo3 = addTodo("Fare una passeggiata");
 
 
@@ -59,5 +60,5 @@ console.log("TODOs per l'utente 102:", getUserTodos(102));
 
 console.log(parseInput("Ciao mondo"));     // 👉 "Ciao mondo"
 console.log(parseInput(123));              // 👉 "123"
-console.log(parseInput(true));             // 👉 Errore: Tipo di input non supportato.
-
+/* console.log(parseInput(true)); */             // 👉 Errore: Tipo di input non supportato.
+console.log(todos);
