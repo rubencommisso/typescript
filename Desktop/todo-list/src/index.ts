@@ -1,4 +1,5 @@
-import { Project, Todo, TodoWithMetadata, User, TodoStatus } from './types';
+import { Project, Todo, TodoWithMetadata, TodoStatus } from './types';
+import { User } from './User'; // ← nuova classe User
 
 let todos: Todo[] = [];
 let nextId = 1;
@@ -79,11 +80,18 @@ const todo1 = addTodo("Comprare il latte", { priority: "alta", note: "Anche il p
 const todo2 = addTodo("Compilare il modulo", "Scadenza entro venerdì");
 const todo3 = addTodo("Fare una passeggiata");
 
-assignTodoToUser(todo1.id, 101);
-assignTodoToUser(todo2.id, 101);
-assignTodoToUser(todo3.id, 102);
+// ✅ Crea istanze di User (classe)
+const user1 = new User(101, "Mario Rossi", "mario@example.com");
+const user2 = new User(102, "Lucia Bianchi");
 
-updateTodo(todo1.id, { completed: true }); // Imposta anche status: Completed
+// ✅ Usa addTodo per assegnare i task
+user1.addTodo(todo1);
+user1.addTodo(todo2);
+user2.addTodo(todo3);
+
+// Puoi evitare assignTodoToUser ora che è fatto dentro addTodo()
+
+updateTodo(todo1.id, { completed: true });
 updateTodo(todo2.id, { title: "Compilare il modulo fiscale", metadata: "Urgente", status: TodoStatus.InProgress });
 
 updateTodoStatus(todo3.id, TodoStatus.InProgress);
@@ -96,9 +104,6 @@ todos.forEach(todo => {
   const [title, completed] = getTodoSummary(todo);
   console.log(`- ${title} (${completed ? "completato" : "da fare"})`);
 });
-
-const user1: User = { id: 101, name: "Mario Rossi", todos: [todo1, todo2] };
-const user2: User = { id: 102, name: "Lucia Bianchi", todos: [todo3] };
 
 const project = createProject("Gestione Attività", [user1, user2], todos);
 
