@@ -63,6 +63,17 @@ function createProject(name: string, users: User[], todos: Todo[]): Project {
   };
 }
 
+function updateTodoStatus(todoId: number, status: TodoStatus): void {
+  const todo = todos.find(t => t.id === todoId);
+  if (!todo) {
+    error(`Todo con ID ${todoId} non trovato.`);
+  }
+
+  todo.status = status;
+  todo.completed = status === TodoStatus.Completed;
+}
+
+
 // Test
 const todo1 = addTodo("Comprare il latte", { priority: "alta", note: "Anche il pane" });
 const todo2 = addTodo("Compilare il modulo", "Scadenza entro venerdì");
@@ -74,6 +85,9 @@ assignTodoToUser(todo3.id, 102);
 
 updateTodo(todo1.id, { completed: true }); // Imposta anche status: Completed
 updateTodo(todo2.id, { title: "Compilare il modulo fiscale", metadata: "Urgente", status: TodoStatus.InProgress });
+
+updateTodoStatus(todo3.id, TodoStatus.InProgress);
+updateTodoStatus(todo1.id, TodoStatus.Completed);
 
 console.log("Todos dopo gli aggiornamenti:");
 console.log(todos);
