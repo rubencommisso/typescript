@@ -1,5 +1,7 @@
 import { Project, Todo, TodoWithMetadata, TodoStatus } from './types';
 import { User } from './User'; // ← nuova classe User
+import { filterTodos } from './utils';
+
 
 let todos: Todo[] = [];
 let nextId = 1;
@@ -109,3 +111,10 @@ const project = createProject("Gestione Attività", [user1, user2], todos);
 
 console.log("📁 Progetto creato:", project);
 
+// Todos completati
+const completedTodos = filterTodos(todos, todo => todo.completed);
+console.log("✅ Todos completati:", completedTodos);
+
+// Todos in stato InProgress
+const inProgressTodos = filterTodos(todos, todo => todo.status === TodoStatus.InProgress);
+console.log("🔄 Todos in corso:", inProgressTodos);
