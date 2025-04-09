@@ -1,5 +1,4 @@
 // src/types.ts
-
 export enum TodoStatus {
   Pending = 'Pending',
   InProgress = 'InProgress',
@@ -34,3 +33,4 @@ export interface Project {
 
 export type PartialTodo = Partial<Todo>;
 
+export type TodoRecord = Record<number, Todo>;

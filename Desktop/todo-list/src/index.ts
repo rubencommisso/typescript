@@ -3,6 +3,8 @@ import { Project, Todo, TodoWithMetadata, TodoStatus } from './types';
 import { User } from './User'; // ← nuova classe User
 import { filterTodos } from './utils';
 import { PartialTodo } from './types';
+import { convertArrayToRecord } from './utils';
+
 
 let todos: Todo[] = [];
 let nextId = 1;
@@ -149,3 +151,8 @@ console.log("📌 Todos dopo updatePartialTodo:");
 todos.forEach(todo => {
   console.log(`- ${todo.title} | Status: ${todo.status} | Completed: ${todo.completed}`);
 });
+
+const todoMap = convertArrayToRecord(todos);
+
+console.log("🔍 Accesso diretto per ID:");
+console.log(todoMap[1]); // accedi al todo con id 1
