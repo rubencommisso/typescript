@@ -31,3 +31,6 @@ export interface Project {
   users: User[];
   todos: Todo[];
 }
+
+export type PartialTodo = Partial<Todo>;
+

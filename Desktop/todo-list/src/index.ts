@@ -1,7 +1,8 @@
+//index.ts
 import { Project, Todo, TodoWithMetadata, TodoStatus } from './types';
 import { User } from './User'; // ← nuova classe User
 import { filterTodos } from './utils';
-
+import { PartialTodo } from './types';
 
 let todos: Todo[] = [];
 let nextId = 1;
@@ -118,3 +119,33 @@ console.log("✅ Todos completati:", completedTodos);
 // Todos in stato InProgress
 const inProgressTodos = filterTodos(todos, todo => todo.status === TodoStatus.InProgress);
 console.log("🔄 Todos in corso:", inProgressTodos);
+
+function updatePartialTodo(todoId: number, updates: PartialTodo): void {
+  const todo = todos.find(t => t.id === todoId);
+  if (!todo) {
+    error(`Todo con ID ${todoId} non trovato.`);
+  }
+
+  Object.assign(todo, updates);
+
+  // Mantieni la logica di sincronizzazione tra status e completed
+  if (updates.status !== undefined) {
+    todo.completed = updates.status === TodoStatus.Completed;
+  }
+
+  if (updates.completed !== undefined) {
+    if (updates.completed) {
+      todo.status = TodoStatus.Completed;
+    } else if (todo.status === TodoStatus.Completed) {
+      todo.status = TodoStatus.Pending;
+    }
+  }
+}
+
+updatePartialTodo(todo1.id, { title: "Nuovo titolo" });
+updatePartialTodo(todo2.id, { metadata: { note: "Ricordati!" }, completed: true });
+
+console.log("📌 Todos dopo updatePartialTodo:");
+todos.forEach(todo => {
+  console.log(`- ${todo.title} | Status: ${todo.status} | Completed: ${todo.completed}`);
+});
